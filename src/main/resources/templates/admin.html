@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container" style="width: 70%;margin: 0 auto;">
+    <div class="row" style="display: flex">
+        <div class="col">
+            <h2>DELETE USER BY NAME</h2>
+            <form th:method="POST" th:action="@{/admin/deleteUser}">
+                Name : <input type="text" name="userName" class="form-control"/>
+                <button style="margin-top: 10px;" type="submit" class="btn btn-info">Delete</button>
+            </form>
+        </div>
+        <div class="col" style="margin-left: 50px">
+            <h2>GET IMAGES</h2>
+            <a href="/api/images/" class="btn btn-primary">JSON IMAGES</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

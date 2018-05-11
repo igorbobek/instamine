@@ -1,0 +1,105 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+
+<div th:fragment="images">
+    <div>
+        <div th:each="image : ${images}">
+            <div style="margin: 4px; text-align: center">
+                <h2 th:text="'Added by:'"></h2><h2><a th:href="${'/user/'+image.user.name}" th:text="${image.user.name}"></a></h2>
+                    <a th:href="${'/image/' + image.id}">
+                        <img th:src="${image.src}" width="600" style=" box-shadow: 0px 0px 0px 7px #69b42ba3;">
+                    </a>
+                <h2 th:text="${#lists.size(image.likes) + ' likes'}"></h2>
+                <form style="float: right;" sec:authorize="isAuthenticated()" th:action="@{/like}" th:method="POST">
+                    <input type = "hidden" name = "imageId" th:value="${image.id}"/>
+                    <button class="btn btn-primary" type="submit">LIKE</button>
+                </form>
+            </div>
+            <hr/>
+            <hr/>
+        </div>
+    </div>
+</div>
+
+
+<div th:fragment="image">
+    <table class="table table-striped" id="image">
+        <tr>
+            <td style="display: flex;margin: 32px;">
+                <div style="margin: auto">
+                    <h2 th:text="${'Added by: '+ image.user.name}"></h2>
+                    <a th:href="${'/image/' + image.id}">
+                        <img th:src="${image.src}" width="350px">
+                    </a>
+                    <h2 th:text="${#lists.size(image.likes) + ' likes'}"></h2>
+                </div>
+                <form style="float: right;" sec:authorize="isAuthenticated()" th:action="@{/like}" th:method="POST">
+                    <input type = "hidden" name = "imageId" th:value="${image.id}"/>
+                    <button class="btn btn-primary" type="submit">LIKE</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+<div th:fragment="comments">
+    <h2 style="text-align: center">Комментарии</h2>
+    <div id="comments">
+            <table class="table table-striped">
+                <tr th:each="comment : ${comments}">
+                    <td>
+                        <div th:text="${'Пользователь: '+comment.user.name}"></div>
+                        <div th:text="${'Дата: '+comment.comment.date}"></div>
+                        <div th:text="${'Коментарий: '+comment.comment.content}"></div>
+                    </td>
+                </tr>
+            </table>
+    </div>
+    <form sec:authorize="isAuthenticated()" th:action="@{/addComment}" th:method="POST">
+        <input type = "hidden" name = "imageId" th:value="${image.id}"/>
+        <input type = "text" name = "comment" class="form-control"/>
+        <button class="btn btn-primary" type="submit">Отправить</button>
+    </form>
+</div>
+
+
+<div th:fragment="header_menu">
+    <table style="width: 100%; height: 57px; background-color: cornflowerblue;">
+        <tr>
+            <td>
+                <div>
+                    <button class="btn btn-secondary" style="float: left;" type="submit" onclick="location.href = '/'">Home</button>
+                    <div sec:authorize="isAuthenticated()">
+                        <button class="btn btn-secondary" style="float: left; margin-left: 10px" type="submit" onclick="location.href = '/addImage'">Add image</button>
+                        <div class="remove-filter pull-right">
+                            <div style="float: right;">
+                            <button class="btn btn-danger" style="float: right;" type="submit" onclick="location.href = '/logout'">Log out</button>
+                            <ul class="infoUser">
+                                Привет: <li class="badge badge-pill badge-primary" th:text="${user.name}">t</li>
+                            </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div sec:authorize="!isAuthenticated()" class="remove-filter pull-right">
+                        <div style="float: right;">
+                            <button class="btn btn-success" type="submit" onclick="location.href = '/login'">Log in</button>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>

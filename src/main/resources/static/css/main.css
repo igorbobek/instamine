@@ -1,0 +1,30 @@
+body{
+    background: lemonchiffon;
+    width: 700px;
+    margin: 0 auto;
+}
+#images tr td {
+    display: flex;
+    margin-right: 20px;
+}
+
+#images tr td div{
+    margin-right: 16px;
+}
+
+#image tr td div{
+    margin-right: 16px;
+}
+
+.table-striped>tbody>tr:nth-of-type(odd) {
+    background-color: #f9f9f9;
+    display: block;
+    margin: -10px;
+}
+
+#comments{
+    height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: 100%;
+}
